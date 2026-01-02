@@ -1,5 +1,6 @@
 import './ProtegeSection.css';
 import AboutProtege from "../components/AboutProtege";
+import Gallery from "../components/Gallery";
 import WhyJoinProtege from "./WhyJoinProtege";
 
 const ProtegeSection = () => {
@@ -10,9 +11,7 @@ const ProtegeSection = () => {
       <AboutProtege />
 
       {/* Image Gallery */}
-      <div className="protege-gallery">
-        {/* images go here */}
-      </div>
+      <Gallery />
 
       {/* Why Join Protégé */}
       <WhyJoinProtege />

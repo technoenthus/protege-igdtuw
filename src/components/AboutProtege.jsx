@@ -1,4 +1,5 @@
 import "./AboutProtege.css";
+import { useEffect } from "react";
 import {
   FiUsers,
   FiTrendingUp,
@@ -28,13 +29,51 @@ const pillars = [
 ];
 
 const roadmap = [
-  { title: "Mentorship", icon: <FiTarget />, text: "1:1 and group mentorship" },
-  { title: "Upskilling", icon: <FiCode />, text: "Workshops & bootcamps" },
-  { title: "Collaboration", icon: <FiLayers />, text: "Peer learning & projects" },
-  { title: "Progress", icon: <FiCheckCircle />, text: "Goal tracking" },
+  { 
+    title: "Mentorship", 
+    icon: <FiTarget />, 
+    text: "Structured one-on-one and group mentorship sessions tailored to individual goals"
+  },
+  { 
+    title: "Upskilling", 
+    icon: <FiCode />, 
+    text: "Technical workshops, coding bootcamps, and skill-building programs"
+  },
+  { 
+    title: "Collaboration", 
+    icon: <FiLayers />, 
+    text: "Peer learning circles and collaborative project opportunities",
+  },
+  { 
+    title: "Progress", 
+    icon: <FiCheckCircle />, 
+    text: "Regular progress tracking and goal-setting frameworks"
+  },
 ];
 
 const AboutProtege = () => {
+  useEffect(() => {
+    const pillars = document.querySelectorAll(".pillar-card");
+    const steps = document.querySelectorAll(".roadmap-step");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    pillars.forEach((card) => observer.observe(card));
+    steps.forEach((step) => observer.observe(step));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="about-protege">
       <p className="about-tag">ABOUT</p>
@@ -49,7 +88,7 @@ const AboutProtege = () => {
         relationships.
       </p>
 
-      {/* PILLARS — DO NOT REMOVE */}
+      {/* PILLARS */}
       <div className="about-pillars">
         {pillars.map((item, i) => (
           <div className="pillar-card" key={i}>
@@ -69,11 +108,16 @@ const AboutProtege = () => {
           <span className="timeline-base"></span>
 
           {roadmap.map((step, i) => (
-            <div className="roadmap-step" key={i}>
+            <div 
+              className="roadmap-step" 
+              key={i}
+              style={{ transitionDelay: `${i * 0.15}s` }}
+            >
               <span className="timeline-dot"></span>
               <div className="roadmap-icon">{step.icon}</div>
               <h4>{step.title}</h4>
               <p>{step.text}</p>
+              <p className="roadmap-description">{step.description}</p>
             </div>
           ))}
         </div>
